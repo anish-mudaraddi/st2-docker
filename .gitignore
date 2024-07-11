@@ -36,5 +36,5 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-files/clouds.yaml
+files/secrets/*
 files/htpasswd
