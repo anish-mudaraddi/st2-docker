@@ -28,7 +28,7 @@ services:
       - --email-domain=*
       - --set-xauthrequest=true
     env_file:
-      - ./oauth_secrets.env
+      - ./files/secrets/oauth_secrets.env
     networks:
       - private
 
