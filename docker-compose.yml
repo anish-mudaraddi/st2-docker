@@ -1,6 +1,21 @@
 version: '3'
 
 services:
+  nginx:
+    image: nginx:latest
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./files/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./files/certs:/etc/nginx/certs:ro
+    depends_on:
+      - st2web
+    networks:
+      - public
+      - private
+
   st2web:
     image: ${ST2_IMAGE_REPO:-stackstorm/}st2web:${ST2_VERSION:-latest}
     restart: on-failure
@@ -23,8 +38,8 @@ services:
       # If you want to use a custom st2web config, edit ./files/config.js accordingly and
       # uncomment the line below
       #- ./files/config.js:/opt/stackstorm/static/webui/config.js:ro
-    ports:
-      - "${ST2_EXPOSE_HTTP:-127.0.0.1:80}:80"
+    # ports:
+      # - "${ST2_EXPOSE_HTTP:-127.0.0.1:80}:80"
       # - "${ST2_EXPOSE_HTTPS:-127.0.0.1:443}:443"
       # more work would be needed with certificate generate to make https work.
     networks:
@@ -187,7 +202,7 @@ services:
       - st2auth
       - st2api
       - st2stream
-    command: /st2client-startup.sh
+    command: /st2client-startup.sh; st2 pack install https://github.com/stfc/st2-cloud-pack=main
     networks:
       - private
     environment:
