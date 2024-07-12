@@ -9,6 +9,7 @@ services:
     environment:
       ST2_AUTH_URL: ${ST2_AUTH_URL:-http://st2auth:9100/}
     volumes:
+      -  ./files/nginx.conf:/etc/nginx/nginx.conf:ro
       - ./files/certs:/etc/nginx/certs:ro
     depends_on:
       - st2web

@@ -13,7 +13,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -a -installsuffix cgo -o auth_service .
 FROM nginx:alpine
 
 COPY --from=build /app/auth_service /app/auth_service
-COPY nginx.conf /etc/nginx/nginx.conf
 COPY start.sh /start.sh
 
 RUN chmod +x /start.sh
