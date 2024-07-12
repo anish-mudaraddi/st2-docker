@@ -26,9 +26,16 @@ func main() {
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Received auth request from %s", r.RemoteAddr)
 
+	for name, values := range r.Header {
+		// Loop over all values for the name.
+		for _, value := range values {
+			fmt.Println(name, value)
+		}
+	}
+
 	user := r.Header.Get("REMOTE_USER")
 	if user == "" {
-		log.Println("Unauthorized: X-Auth-Request-User header is empty")
+		log.Println("Unauthorized: REMOTE_USER header is empty")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		return
 	}
