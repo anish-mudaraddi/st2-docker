@@ -26,7 +26,7 @@ func main() {
 func authHandler(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Received auth request from %s", r.RemoteAddr)
 
-	user := r.Header.Get("X-Auth-Request-User")
+	user := r.Header.Get("REMOTE_USER")
 	if user == "" {
 		log.Println("Unauthorized: X-Auth-Request-User header is empty")
 		http.Error(w, "Unauthorized", http.StatusUnauthorized)
@@ -39,7 +39,7 @@ func authHandler(w http.ResponseWriter, r *http.Request) {
 
 	payload := map[string]string{
 		"user":        user,
-		"remote_addr": r.Header.Get("X-Real-IP"),
+		"remote_addr": r.Header.Get("REMOTE_ADDR"),
 	}
 	jsonPayload, err := json.Marshal(payload)
 	if err != nil {
