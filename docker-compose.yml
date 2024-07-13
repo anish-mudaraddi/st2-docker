@@ -1,8 +1,6 @@
 services:
-  nginx-auth-proxy:
-    build:
-      context: ./nginx-auth-proxy
-      dockerfile: Dockerfile
+  nginx:
+    image: nginx:latest
     ports:
       - "80:80"
       - "443:443"
@@ -24,6 +22,7 @@ services:
       - 0.0.0.0:4180 
     environment:
       OAUTH2_PROXY_UPSTREAMS: http://nginx:80
+      OAUTH2_REVERSE_PROXY: true
       OAUTH2_PROXY_PROVIDER: oidc 
       OAUTH2_PROXY_OIDC_ISSUER_URL: https://iris-iam.stfc.ac.uk/
       OAUTH2_PROXY_CLIENT_ID: $OAUTH_CLIENT_ID
