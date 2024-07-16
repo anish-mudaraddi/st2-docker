@@ -18,6 +18,8 @@ services:
     command:
       - --http-address
       - 0.0.0.0:4180 
+      - --allowed-group
+      - stfc-cloud/admins
     environment:
       OAUTH2_PROXY_UPSTREAMS: http://nginx:80
       OAUTH2_REVERSE_PROXY: true
